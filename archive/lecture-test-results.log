@@ -1,0 +1,72 @@
+[0;35m=== Cloud Intermediate 강의 시나리오 테스트 시작 ===[0m
+[0;35m=== 환경 설정 테스트 ===[0m
+[0;34m[INFO][0m 테스트 실행: Docker 설치
+[0;32m[SUCCESS][0m ✅ Docker 설치: 통과
+[0;34m[INFO][0m 테스트 실행: Docker Compose 설치
+[0;32m[SUCCESS][0m ✅ Docker Compose 설치: 통과
+[0;34m[INFO][0m 테스트 실행: kubectl 설치
+[0;32m[SUCCESS][0m ✅ kubectl 설치: 통과
+[0;34m[INFO][0m 테스트 실행: AWS CLI 설치
+[0;32m[SUCCESS][0m ✅ AWS CLI 설치: 통과
+[0;34m[INFO][0m 테스트 실행: GCP CLI 설치
+[0;32m[SUCCESS][0m ✅ GCP CLI 설치: 통과
+[0;34m[INFO][0m 테스트 실행: Git 설치
+[0;32m[SUCCESS][0m ✅ Git 설치: 통과
+[0;34m[INFO][0m 테스트 실행: jq 설치
+[0;32m[SUCCESS][0m ✅ jq 설치: 통과
+[0;34m[INFO][0m 테스트 실행: AWS 환경 설정
+[0;32m[SUCCESS][0m ✅ AWS 환경 설정: 통과
+[0;34m[INFO][0m 테스트 실행: GCP 환경 설정
+[0;32m[SUCCESS][0m ✅ GCP 환경 설정: 통과
+[0;34m[INFO][0m 테스트 실행: AWS 자격 증명
+[0;32m[SUCCESS][0m ✅ AWS 자격 증명: 통과
+[0;34m[INFO][0m 테스트 실행: GCP 프로젝트 설정
+[0;32m[SUCCESS][0m ✅ GCP 프로젝트 설정: 통과
+[0;35m=== 자동화 스크립트 테스트 ===[0m
+[0;34m[INFO][0m 테스트 실행: 스크립트 존재: day1-practice.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 존재: day1-practice.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 실행 권한: day1-practice.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 실행 권한: day1-practice.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 도움말: day1-practice.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 도움말: day1-practice.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 존재: day2-practice.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 존재: day2-practice.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 실행 권한: day2-practice.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 실행 권한: day2-practice.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 도움말: day2-practice.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 도움말: day2-practice.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 존재: cloud-intermediate-helper.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 존재: cloud-intermediate-helper.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 실행 권한: cloud-intermediate-helper.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 실행 권한: cloud-intermediate-helper.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 도움말: cloud-intermediate-helper.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 도움말: cloud-intermediate-helper.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 존재: aws-eks-helper.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 존재: aws-eks-helper.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 실행 권한: aws-eks-helper.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 실행 권한: aws-eks-helper.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 도움말: aws-eks-helper.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 도움말: aws-eks-helper.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 존재: gcp-gke-helper.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 존재: gcp-gke-helper.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 실행 권한: gcp-gke-helper.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 실행 권한: gcp-gke-helper.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 도움말: gcp-gke-helper.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 도움말: gcp-gke-helper.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 존재: cloud-cluster-helper.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 존재: cloud-cluster-helper.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 실행 권한: cloud-cluster-helper.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 실행 권한: cloud-cluster-helper.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 도움말: cloud-cluster-helper.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 도움말: cloud-cluster-helper.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 존재: monitoring-stack.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 존재: monitoring-stack.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 실행 권한: monitoring-stack.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 실행 권한: monitoring-stack.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 도움말: monitoring-stack.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 도움말: monitoring-stack.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 존재: aws-setup-helper.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 존재: aws-setup-helper.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 실행 권한: aws-setup-helper.sh
+[0;32m[SUCCESS][0m ✅ 스크립트 실행 권한: aws-setup-helper.sh: 통과
+[0;34m[INFO][0m 테스트 실행: 스크립트 도움말: aws-setup-helper.sh
