@@ -1,0 +1,19 @@
+{
+  "timestamp": "20250929_215045",
+  "status": "started",
+  "steps": [
+    {
+      "step": "deploy-workload",
+      "status": "completed",
+      "message": "Workload 배포 완료",
+      "timestamp": 1759150252.02387
+    }
+  ],
+  "resources": {
+    "created": [],
+    "existing": [],
+    "modified": [],
+    "deleted": []
+  },
+  "errors": []
+}

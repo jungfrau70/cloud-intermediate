@@ -1,68 +1,47 @@
 global:
   scrape_interval: 15s
-  evaluation_interval: 15s
   external_labels:
-    cluster: 'cloud-intermediate'
-    environment: 'learning'
-
-rule_files:
-  - "rules/*.yml"
-
-alerting:
-  alertmanagers:
-    - static_configs:
-        - targets:
-          - alertmanager:9093
+    environment: 'production'
+    region: 'global'
 
 scrape_configs:
-  - job_name: 'prometheus'
-    static_configs:
-      - targets: ['localhost:9090']
-    scrape_interval: 5s
-    metrics_path: '/metrics'
-
-  - job_name: 'node-exporter'
+  # AWS VM 로컬 메트릭 수집
+  - job_name: 'aws-vm-local'
     static_configs:
       - targets: ['node-exporter:9100']
     scrape_interval: 15s
-    metrics_path: '/metrics'
 
-  - job_name: 'grafana'
-    static_configs:
-      - targets: ['grafana:3000']
-    scrape_interval: 30s
-    metrics_path: '/metrics'
-
-  - job_name: 'alertmanager'
-    static_configs:
-      - targets: ['alertmanager:9093']
-    scrape_interval: 30s
-    metrics_path: '/metrics'
-
+  # Push Gateway 메트릭 수집
   - job_name: 'pushgateway'
     static_configs:
       - targets: ['pushgateway:9091']
-    scrape_interval: 30s
-    metrics_path: '/metrics'
+    honor_labels: true
+    scrape_interval: 5s
 
-  # AWS ECS 메트릭 수집
-  - job_name: 'aws-ecs'
-    static_configs:
-      - targets: ['aws-ecs-exporter:9105']
+  # GCP 클러스터 메트릭 수집 (Federation) - 나중에 추가
+  - job_name: 'gcp-cluster-federation'
     scrape_interval: 30s
-    metrics_path: '/metrics'
+    honor_labels: true
+    metrics_path: /federate
+    params:
+      'match[]':
+        - '{job=~"gcp-.*"}'
+    static_configs:
+      - targets: ['gcp-prometheus.example.com:9090']
+    basic_auth:
+      username: 'prometheus'
+      password: 'secure-password'
 
-  # GCP Cloud Run 메트릭 수집
-  - job_name: 'gcp-cloud-run'
-    static_configs:
-      - targets: ['gcp-cloud-run-exporter:9106']
+  # AWS 클러스터 메트릭 수집 (Federation) - 나중에 추가
+  - job_name: 'aws-cluster-federation'
     scrape_interval: 30s
-    metrics_path: '/metrics'
-
-  # 외부 서비스 메트릭 수집
-  - job_name: 'external-services'
+    honor_labels: true
+    metrics_path: /federate
+    params:
+      'match[]':
+        - '{job=~"aws-.*"}'
     static_configs:
-      - targets: ['aws-alb-dns:80', 'gcp-cloud-run-url:8080']
-    scrape_interval: 30s
-    metrics_path: '/metrics'
-    scheme: http
+      - targets: ['aws-prometheus.example.com:9090']
+    basic_auth:
+      username: 'prometheus'
+      password: 'secure-password'

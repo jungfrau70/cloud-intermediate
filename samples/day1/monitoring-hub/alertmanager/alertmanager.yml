@@ -1,6 +1,6 @@
 global:
   smtp_smarthost: 'localhost:587'
-  smtp_from: 'alertmanager@example.com'
+  smtp_from: 'alerts@example.com'
 
 route:
   group_by: ['alertname']
@@ -12,11 +12,14 @@ route:
 receivers:
 - name: 'web.hook'
   webhook_configs:
-  - url: 'http://localhost:5001/'
+  - url: 'http://127.0.0.1:5001/'
 
-inhibit_rules:
-  - source_match:
-      severity: 'critical'
-    target_match:
-      severity: 'warning'
-    equal: ['alertname', 'dev', 'instance']
+- name: 'email'
+  email_configs:
+  - to: 'admin@example.com'
+    subject: 'Alert: {{ .GroupLabels.alertname }}'
+    body: |
+      {{ range .Alerts }}
+      Alert: {{ .Annotations.summary }}
+      Description: {{ .Annotations.description }}
+      {{ end }}
