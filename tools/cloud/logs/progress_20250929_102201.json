@@ -1,0 +1,19 @@
+{
+  "timestamp": "20250929_102201",
+  "status": "started",
+  "steps": [
+    {
+      "step": "aws-cleanup",
+      "status": "completed",
+      "message": "AWS 리소스 정리 완료",
+      "timestamp": 1759108928.806799
+    }
+  ],
+  "resources": {
+    "created": [],
+    "existing": [],
+    "modified": [],
+    "deleted": []
+  },
+  "errors": []
+}

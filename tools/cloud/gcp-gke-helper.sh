@@ -16,6 +16,7 @@ log_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
 log_success() { echo -e "${GREEN}[SUCCESS]${NC} $1"; }
 log_warning() { echo -e "${YELLOW}[WARNING]${NC} $1"; }
 log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
+log_header() { echo -e "${PURPLE}=== $1 ===${NC}"; }
 
 # 기본 설정
 CLUSTER_NAME="cloud-intermediate-gke"
@@ -26,7 +27,7 @@ MACHINE_TYPE="e2-medium"
 NODE_COUNT=2
 MIN_NODES=1
 MAX_NODES=4
-VERSION="1.28"
+VERSION="1.30"
 DISK_SIZE="20"
 DISK_TYPE="pd-standard"
 
@@ -35,6 +36,63 @@ if [ -f "gcp-environment.env" ]; then
     source gcp-environment.env
     log_info "GCP 환경 변수 로드 완료"
 fi
+
+# GKE 클러스터 선택
+select_gke_cluster() {
+    log_info "사용 가능한 GKE 클러스터 목록:"
+    local clusters=$(gcloud container clusters list --format="table(name,location,status,currentMasterVersion,currentNodeCount)" 2>/dev/null)
+    
+    if [ -z "$clusters" ] || [ "$clusters" = "NAME  LOCATION  STATUS  CURRENT_MASTER_VERSION  CURRENT_NODE_COUNT" ]; then
+        log_warning "GKE 클러스터가 없습니다."
+        return 1
+    fi
+    
+    echo "$clusters"
+    echo ""
+    
+    # 클러스터 이름 목록 추출
+    local cluster_names=$(gcloud container clusters list --format="value(name)" 2>/dev/null)
+    local cluster_array=($cluster_names)
+    
+    if [ ${#cluster_array[@]} -eq 0 ]; then
+        log_warning "선택할 수 있는 클러스터가 없습니다."
+        return 1
+    fi
+    
+    # 클러스터 선택 메뉴
+    echo "=== 클러스터 선택 ==="
+    for i in "${!cluster_array[@]}"; do
+        echo "$((i+1)). ${cluster_array[i]}"
+    done
+    echo "0. 취소"
+    echo ""
+    
+    read -p "삭제할 클러스터를 선택하세요 (번호): " choice
+    
+    if [ "$choice" = "0" ]; then
+        log_info "클러스터 선택을 취소했습니다."
+        return 1
+    fi
+    
+    if [ "$choice" -ge 1 ] && [ "$choice" -le ${#cluster_array[@]} ]; then
+        local selected_cluster="${cluster_array[$((choice-1))]}"
+        log_info "선택된 클러스터: $selected_cluster"
+        
+        # 선택된 클러스터의 상세 정보 확인
+        local cluster_info=$(gcloud container clusters describe "$selected_cluster" --format="value(name,location,status)" 2>/dev/null)
+        if [ -n "$cluster_info" ]; then
+            log_info "클러스터 정보: $cluster_info"
+            CLUSTER_NAME="$selected_cluster"
+            return 0
+        else
+            log_error "클러스터 정보를 가져올 수 없습니다."
+            return 1
+        fi
+    else
+        log_error "잘못된 선택입니다."
+        return 1
+    fi
+}
 
 # GCP CLI 설정 확인
 check_gcp_cli() {
@@ -80,6 +138,7 @@ create_gke_cluster() {
     fi
     
     # GKE 클러스터 생성
+    log_info "GKE 클러스터 생성 시작..."
     gcloud container clusters create $CLUSTER_NAME \
         --zone $ZONE \
         --project $PROJECT_ID \
@@ -95,11 +154,45 @@ create_gke_cluster() {
         --enable-autoupgrade \
         --enable-ip-alias \
         --enable-network-policy \
-        --enable-stackdriver-kubernetes \
+        --logging=SYSTEM,WORKLOAD \
+        --monitoring=SYSTEM \
         --addons HorizontalPodAutoscaling,HttpLoadBalancing \
-        --tags "environment=learning,project=cloudintermediate"
+        --tags "gke-test1-cluster" &
     
-    if [ $? -eq 0 ]; then
+    local create_pid=$!
+    
+    # 클러스터 생성 진행 상황 모니터링 (5초마다 갱신)
+    log_info "클러스터 생성 진행 상황 모니터링 시작..."
+    while kill -0 $create_pid 2>/dev/null; do
+        local cluster_status=$(gcloud container clusters describe $CLUSTER_NAME --zone $ZONE --project $PROJECT_ID --format="value(status)" 2>/dev/null || echo "PROVISIONING")
+        
+        case "$cluster_status" in
+            "PROVISIONING")
+                log_info "클러스터 생성 진행 중... (상태: $cluster_status)"
+                ;;
+            "RUNNING")
+                log_success "클러스터 생성 완료"
+                break
+                ;;
+            "STOPPING"|"STOPPED")
+                log_warning "클러스터 상태: $cluster_status"
+                ;;
+            "ERROR")
+                log_error "클러스터 생성 실패"
+                return 1
+                ;;
+            *)
+                log_info "클러스터 상태: $cluster_status"
+                ;;
+        esac
+        
+        sleep 5
+    done
+    
+    wait $create_pid
+    local create_result=$?
+    
+    if [ $create_result -eq 0 ]; then
         log_success "GKE 클러스터 생성 완료: $CLUSTER_NAME"
         
         # kubectl 설정
@@ -119,13 +212,23 @@ create_gke_cluster() {
 
 # GKE 클러스터 삭제
 delete_gke_cluster() {
+    # 클러스터 선택
+    if ! select_gke_cluster; then
+        return 1
+    fi
+    
     log_warning "GKE 클러스터 삭제 시작: $CLUSTER_NAME"
     
-    read -p "정말로 클러스터를 삭제하시겠습니까? (y/N): " -n 1 -r
-    echo
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        log_info "클러스터 삭제를 취소했습니다."
-        return 0
+    # Force 옵션이 있으면 자동으로 y 선택
+    if [ "$FORCE_DELETE" != "true" ]; then
+        read -p "정말로 클러스터를 삭제하시겠습니까? (y/N): " -n 1 -r
+        echo
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            log_info "클러스터 삭제를 취소했습니다."
+            return 0
+        fi
+    else
+        log_info "Force 옵션으로 자동 삭제 진행..."
     fi
     
     gcloud container clusters delete $CLUSTER_NAME \
@@ -163,7 +266,17 @@ check_gke_cluster() {
             gcloud container clusters get-credentials $CLUSTER_NAME --zone $ZONE --project $PROJECT_ID
         fi
     else
-        log_error "클러스터가 존재하지 않거나 접근할 수 없습니다."
+        log_warning "GKE 클러스터 '$CLUSTER_NAME'을 찾을 수 없습니다."
+        log_info "사용 가능한 클러스터 목록:"
+        local existing_clusters=$(gcloud container clusters list --format="value(name)" 2>/dev/null)
+        if [ -n "$existing_clusters" ]; then
+            gcloud container clusters list --format="table(name,location,status,currentMasterVersion,currentNodeCount)"
+        else
+            log_warning "현재 프로젝트에 GKE 클러스터가 없습니다."
+        fi
+        
+        echo ""
+        log_info "클러스터를 생성하려면 '1. GKE 클러스터 생성'을 선택하세요."
         return 1
     fi
 }

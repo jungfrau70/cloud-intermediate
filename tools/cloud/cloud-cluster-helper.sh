@@ -12,6 +12,7 @@ PURPLE='\033[0;35m'
 NC='\033[0m' # No Color
 
 # 로그 함수
+log_header() { echo ""; echo "=== $1 ==="; }
 log_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
 log_success() { echo -e "${GREEN}[SUCCESS]${NC} $1"; }
 log_warning() { echo -e "${YELLOW}[WARNING]${NC} $1"; }
@@ -54,7 +55,7 @@ manage_aws_eks() {
     fi
     
     chmod +x "$AWS_EKS_HELPER"
-    "$AWS_EKS_HELPER" "$action" "$param"
+    "$AWS_EKS_HELPER" --action "$action" "$param"
 }
 
 # GCP GKE 클러스터 관리
@@ -70,7 +71,7 @@ manage_gcp_gke() {
     fi
     
     chmod +x "$GCP_GKE_HELPER"
-    "$GCP_GKE_HELPER" "$action" "$param"
+    "$GCP_GKE_HELPER" --action "$action" "$param"
 }
 
 # 멀티 클라우드 클러스터 생성
@@ -137,6 +138,9 @@ check_multi_cloud_clusters() {
     # GCP GKE 클러스터 상태
     log_info "=== GCP GKE 클러스터 상태 ==="
     manage_gcp_gke "status"
+    
+    echo ""
+    log_info "클러스터가 없는 경우 목록을 보여주고 메뉴로 돌아갑니다."
 }
 
 # 멀티 클라우드 클러스터 모니터링 설정
