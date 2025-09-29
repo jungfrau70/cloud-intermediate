@@ -1,0 +1,76 @@
+[0;34m[INFO][0m 로그 파일: ./cleanup-logs/cleanup_20250929_154306.log
+[0;34m[INFO][0m 프로바이더: all
+[0;34m[INFO][0m 모드: dry-run
+[0;34m[INFO][0m 병렬 작업 수: 4
+[0;34m[INFO][0m 환경 변수 검증 중...
+[0;32m[SUCCESS][0m AWS 환경 검증 완료
+[0;32m[SUCCESS][0m GCP 환경 검증 완료
+[0;34m[INFO][0m 의존성 검증 중...
+[1;33m[WARNING][0m parallel 도구가 설치되지 않았습니다. 순차 처리로 진행합니다.
+[0;32m[SUCCESS][0m 의존성 검증 완료
+[0;32m[SUCCESS][0m 초기화 완료
+[0;36m[STEP][0m === 통합강의안 자원 정리 시작 ===
+[0;34m[INFO][0m AWS 리소스 정리 시작
+[0;34m[INFO][0m AWS 리소스 정리: monitoring-hub
+[0;36m[STEP][0m AWS EC2 인스턴스 정리 중...
+[0;34m[INFO][0m [DRY-RUN] EC2 인스턴스 삭제 (태그: CloudIntermediate-Day1)
+[0;35m[DEBUG][0m 의존성 체크: aws/monitoring-hub
+[0;34m[INFO][0m AWS 리소스 정리: eks-cluster
+[0;36m[STEP][0m AWS EKS 클러스터 정리 중...
+[0;34m[INFO][0m [DRY-RUN] EKS 클러스터 삭제: eks-intermediate
+[0;35m[DEBUG][0m 의존성 체크: aws/eks-cluster
+[0;34m[INFO][0m AWS 리소스 정리: ecs-service
+[0;36m[STEP][0m AWS ECS 클러스터 정리 중...
+[0;34m[INFO][0m [DRY-RUN] ECS 클러스터 삭제: my-cluster
+[0;35m[DEBUG][0m 의존성 체크: aws/ecs-service
+[0;34m[INFO][0m AWS 리소스 정리: ecs-cluster
+[0;36m[STEP][0m AWS ECS 클러스터 정리 중...
+[0;34m[INFO][0m [DRY-RUN] ECS 클러스터 삭제: my-cluster
+[0;35m[DEBUG][0m 의존성 체크: aws/ecs-cluster
+[0;34m[INFO][0m AWS 리소스 정리: load-balancer
+[0;36m[STEP][0m AWS 로드 밸런서 정리 중...
+[0;34m[INFO][0m [DRY-RUN] Application Load Balancer 삭제
+[0;35m[DEBUG][0m 의존성 체크: aws/load-balancer
+[0;34m[INFO][0m AWS 리소스 정리: security-groups
+[0;36m[STEP][0m AWS 보안 그룹 정리 중...
+[0;34m[INFO][0m [DRY-RUN] 보안 그룹 삭제 (태그: CloudIntermediate-Day1)
+[0;35m[DEBUG][0m 의존성 체크: aws/security-groups
+[0;34m[INFO][0m AWS 리소스 정리: subnets
+[0;36m[STEP][0m AWS VPC 정리 중...
+[0;34m[INFO][0m [DRY-RUN] VPC 삭제 (태그: CloudIntermediate-Day1)
+[0;35m[DEBUG][0m 의존성 체크: aws/subnets
+[0;34m[INFO][0m AWS 리소스 정리: vpc
+[0;36m[STEP][0m AWS VPC 정리 중...
+[0;34m[INFO][0m [DRY-RUN] VPC 삭제 (태그: CloudIntermediate-Day1)
+[0;35m[DEBUG][0m 의존성 체크: aws/vpc
+[0;32m[SUCCESS][0m AWS 리소스 정리 완료
+[0;34m[INFO][0m GCP 리소스 정리 시작
+[0;34m[INFO][0m GCP 리소스 정리: gke-cluster
+[0;36m[STEP][0m GCP GKE 클러스터 정리 중...
+[0;34m[INFO][0m [DRY-RUN] GKE 클러스터 삭제: gke-intermediate
+[0;35m[DEBUG][0m 의존성 체크: gcp/gke-cluster
+[0;34m[INFO][0m GCP 리소스 정리: cloud-run
+[0;36m[STEP][0m GCP Cloud Run 서비스 정리 중...
+[0;34m[INFO][0m [DRY-RUN] Cloud Run 서비스 삭제
+[0;35m[DEBUG][0m 의존성 체크: gcp/cloud-run
+[0;34m[INFO][0m GCP 리소스 정리: compute-instances
+[0;36m[STEP][0m GCP Compute Engine 인스턴스 정리 중...
+[0;34m[INFO][0m [DRY-RUN] Compute Engine 인스턴스 삭제
+[0;35m[DEBUG][0m 의존성 체크: gcp/compute-instances
+[0;34m[INFO][0m GCP 리소스 정리: firewall-rules
+[0;36m[STEP][0m GCP 방화벽 규칙 정리 중...
+[0;34m[INFO][0m [DRY-RUN] 방화벽 규칙 삭제
+[0;35m[DEBUG][0m 의존성 체크: gcp/firewall-rules
+[0;34m[INFO][0m GCP 리소스 정리: subnets
+[0;36m[STEP][0m GCP VPC 네트워크 정리 중...
+[0;34m[INFO][0m [DRY-RUN] VPC 네트워크 삭제
+[0;35m[DEBUG][0m 의존성 체크: gcp/subnets
+[0;34m[INFO][0m GCP 리소스 정리: vpc
+[0;36m[STEP][0m GCP VPC 네트워크 정리 중...
+[0;34m[INFO][0m [DRY-RUN] VPC 네트워크 삭제
+[0;35m[DEBUG][0m 의존성 체크: gcp/vpc
+[0;32m[SUCCESS][0m GCP 리소스 정리 완료
+[0;36m[STEP][0m 정리 결과 검증 중...
+[0;31m[ERROR][0m 다음 리소스들이 정리되지 않았습니다:
+[0;31m[ERROR][0m   - AWS EKS 클러스터
+[0;31m[ERROR][0m   - AWS ECS 클러스터

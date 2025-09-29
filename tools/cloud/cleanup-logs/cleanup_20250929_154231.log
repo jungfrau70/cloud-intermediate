@@ -1,0 +1,9 @@
+[0;34m[INFO][0m 로그 파일: ./cleanup-logs/cleanup_20250929_154231.log
+[0;34m[INFO][0m 프로바이더: all
+[0;34m[INFO][0m 모드: dry-run
+[0;34m[INFO][0m 병렬 작업 수: 4
+[0;34m[INFO][0m 환경 변수 검증 중...
+[0;32m[SUCCESS][0m AWS 환경 검증 완료
+[0;32m[SUCCESS][0m GCP 환경 검증 완료
+[0;34m[INFO][0m 의존성 검증 중...
+[0;31m[ERROR][0m 필수 도구가 설치되지 않았습니다: parallel
