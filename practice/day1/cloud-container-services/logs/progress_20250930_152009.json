@@ -1,0 +1,19 @@
+{
+  "timestamp": "20250930_152009",
+  "status": "started",
+  "steps": [
+    {
+      "step": "service-create",
+      "status": "existing",
+      "message": "기존 서비스 사용: nginx-service",
+      "timestamp": 1759213211.424021
+    }
+  ],
+  "resources": {
+    "created": [],
+    "existing": [],
+    "modified": [],
+    "deleted": []
+  },
+  "errors": []
+}

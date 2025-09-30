@@ -1,0 +1,235 @@
+
+[ec2-user@ip-10-1-1-198 kubernetes-basics]$ ./aws-eks-helper.sh --action create-cluster --name demo-cluster --region ap-northeast-2
+[INFO] AWS 환경 변수 로드 완료
+[ERROR] 알 수 없는 액션: create-cluster
+AWS EKS 클러스터 구성 Helper 스크립트
+
+사용법:
+  ./aws-eks-helper.sh [옵션]                    # Interactive 모드
+  ./aws-eks-helper.sh --action <액션> [파라미터] # Parameter 모드
+
+Interactive 모드 옵션:
+  --interactive, -i            # Interactive 모드 (기본값)
+  --help, -h                   # 도움말 출력
+
+Parameter 모드 액션:
+  --action create              # EKS 클러스터 생성
+  --action delete              # EKS 클러스터 삭제
+  --action status              # EKS 클러스터 상태 확인
+  --action scale <count>       # 클러스터 스케일링
+  --action upgrade <version>   # 클러스터 업그레이드
+  --action monitoring          # 모니터링 설정
+
+옵션:
+  --force                      # 자동으로 기존 리소스 삭제 (y/N 질문 건너뛰기)
+
+예시:
+  ./aws-eks-helper.sh                           # Interactive 모드
+  ./aws-eks-helper.sh --action create           # EKS 클러스터 생성
+  ./aws-eks-helper.sh --action create --force   # 자동 삭제 후 클러스터 생성
+  ./aws-eks-helper.sh --action status           # 클러스터 상태 확인
+  ./aws-eks-helper.sh --action scale 3          # 노드 3개로 스케일링
+
+환경 변수:
+  CLUSTER_NAME        클러스터 이름 (기본값: cloud-intermediate-eks)
+  REGION              AWS 리전 (기본값: ap-northeast-2)
+  NODE_TYPE           노드 타입 (기본값: t3.medium)
+  NODE_COUNT          노드 수 (기본값: 2)
+[ec2-user@ip-10-1-1-198 kubernetes-basics]$ ./aws-eks-helper.sh --action  create --cluster demo-cluster --region ap-northeast-2
+[INFO] AWS 환경 변수 로드 완료
+[INFO] AWS CLI 설정 확인 중...
+[SUCCESS] AWS CLI 설정 확인 완료
+[INFO] eksctl 설치 확인 중...
+[SUCCESS] eksctl 설치 확인 완료
+[INFO] EKS 클러스터 생성 시작: cloud-intermediate-eks
+[WARNING] 기존 CloudFormation 스택들이 존재합니다:
+eksctl-cloud-intermediate-eks-cluster
+[INFO] 기존 스택들을 정리하고 새로 생성하시겠습니까?
+기존 스택들을 삭제하고 새로 생성하시겠습니까? (y/N): y
+[INFO] 기존 CloudFormation 스택들 삭제 중 (개선된 로직 사용)...
+[INFO] 클러스터 이름 기반 모든 스택 삭제: cloud-intermediate-eks
+[INFO] 삭제할 관련 스택이 없습니다.
+[INFO] EKS 클러스터 생성 시작 (전용 VPC 자동 생성)...
+[INFO] 클러스터 생성 진행 상황 모니터링 시작...
+[INFO] 클러스터 상태: 
+2025-09-30 13:59:25 [ℹ]  eksctl version 0.214.0
+2025-09-30 13:59:25 [ℹ]  using region ap-northeast-2
+2025-09-30 13:59:25 [!]  Amazon EKS will no longer publish EKS-optimized Amazon Linux 2 (AL2) AMIs after November 26th, 2025. Additionally, Kubernetes version 1.32 is the last version for which Amazon EKS will release AL2 AMIs. From version 1.33 onwards, Amazon EKS will continue to release AL2023 and Bottlerocket based AMIs. The default AMI family when creating clusters and nodegroups in Eksctl will be changed to AL2023 in the future.
+2025-09-30 13:59:25 [ℹ]  setting availability zones to [ap-northeast-2c ap-northeast-2d ap-northeast-2b]
+2025-09-30 13:59:25 [ℹ]  subnets for ap-northeast-2c - public:192.168.0.0/19 private:192.168.96.0/19
+2025-09-30 13:59:25 [ℹ]  subnets for ap-northeast-2d - public:192.168.32.0/19 private:192.168.128.0/19
+2025-09-30 13:59:25 [ℹ]  subnets for ap-northeast-2b - public:192.168.64.0/19 private:192.168.160.0/19
+2025-09-30 13:59:25 [ℹ]  nodegroup "standard-workers" will use "" [AmazonLinux2/1.28]
+2025-09-30 13:59:25 [ℹ]  using EC2 key pair "cloud-deployment-key"
+2025-09-30 13:59:25 [ℹ]  using Kubernetes version 1.28
+2025-09-30 13:59:25 [ℹ]  creating EKS cluster "cloud-intermediate-eks" in "ap-northeast-2" region with managed nodes
+2025-09-30 13:59:25 [ℹ]  will create 2 separate CloudFormation stacks for cluster itself and the initial managed nodegroup
+2025-09-30 13:59:25 [ℹ]  if you encounter any issues, check CloudFormation console or try 'eksctl utils describe-stacks --region=ap-northeast-2 --cluster=cloud-intermediate-eks'
+2025-09-30 13:59:25 [ℹ]  Kubernetes API endpoint access will use default of {publicAccess=true, privateAccess=false} for cluster "cloud-intermediate-eks" in "ap-northeast-2"
+2025-09-30 13:59:25 [ℹ]  CloudWatch logging will not be enabled for cluster "cloud-intermediate-eks" in "ap-northeast-2"
+2025-09-30 13:59:25 [ℹ]  you can enable it with 'eksctl utils update-cluster-logging --enable-types={SPECIFY-YOUR-LOG-TYPES-HERE (e.g. all)} --region=ap-northeast-2 --cluster=cloud-intermediate-eks'
+2025-09-30 13:59:25 [ℹ]  default addons metrics-server, vpc-cni, kube-proxy, coredns were not specified, will install them as EKS addons
+2025-09-30 13:59:25 [ℹ]  
+2 sequential tasks: { create cluster control plane "cloud-intermediate-eks", 
+    2 sequential sub-tasks: { 
+        5 sequential sub-tasks: { 
+            1 task: { create addons },
+            wait for control plane to become ready,
+            associate IAM OIDC provider,
+            no tasks,
+            update VPC CNI to use IRSA if required,
+        },
+        create managed nodegroup "standard-workers",
+    } 
+}
+2025-09-30 13:59:25 [ℹ]  building cluster stack "eksctl-cloud-intermediate-eks-cluster"
+2025-09-30 13:59:25 [ℹ]  deploying stack "eksctl-cloud-intermediate-eks-cluster"
+[INFO] 클러스터 상태: 
+[INFO] 클러스터 상태: 
+[INFO] 클러스터 상태: 
+[INFO] 클러스터 상태: 
+[INFO] 클러스터 상태: 
+2025-09-30 13:59:55 [ℹ]  waiting for CloudFormation stack "eksctl-cloud-intermediate-eks-cluster"
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+2025-09-30 14:00:25 [ℹ]  waiting for CloudFormation stack "eksctl-cloud-intermediate-eks-cluster"
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+2025-09-30 14:01:25 [ℹ]  waiting for CloudFormation stack "eksctl-cloud-intermediate-eks-cluster"
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+2025-09-30 14:02:26 [ℹ]  waiting for CloudFormation stack "eksctl-cloud-intermediate-eks-cluster"
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+2025-09-30 14:03:26 [ℹ]  waiting for CloudFormation stack "eksctl-cloud-intermediate-eks-cluster"
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+2025-09-30 14:04:26 [ℹ]  waiting for CloudFormation stack "eksctl-cloud-intermediate-eks-cluster"
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+2025-09-30 14:05:26 [ℹ]  waiting for CloudFormation stack "eksctl-cloud-intermediate-eks-cluster"
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+2025-09-30 14:06:26 [ℹ]  waiting for CloudFormation stack "eksctl-cloud-intermediate-eks-cluster"
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+2025-09-30 14:07:26 [ℹ]  waiting for CloudFormation stack "eksctl-cloud-intermediate-eks-cluster"
+[INFO] 클러스터 생성 진행 중... (상태: CREATING)
+[SUCCESS] 클러스터 생성 완료
+2025-09-30 14:08:26 [ℹ]  waiting for CloudFormation stack "eksctl-cloud-intermediate-eks-cluster"
+2025-09-30 14:08:27 [ℹ]  creating addon: metrics-server
+2025-09-30 14:08:28 [ℹ]  successfully created addon: metrics-server
+2025-09-30 14:08:29 [!]  recommended policies were found for "vpc-cni" addon, but since OIDC is disabled on the cluster, eksctl cannot configure the requested permissions; the recommended way to provide IAM permissions for "vpc-cni" addon is via pod identity associations; after addon creation is completed, add all recommended policies to the config file, under `addon.PodIdentityAssociations`, and run `eksctl update addon`
+2025-09-30 14:08:29 [ℹ]  creating addon: vpc-cni
+2025-09-30 14:08:29 [ℹ]  successfully created addon: vpc-cni
+2025-09-30 14:08:29 [ℹ]  creating addon: kube-proxy
+2025-09-30 14:08:29 [ℹ]  successfully created addon: kube-proxy
+2025-09-30 14:08:30 [ℹ]  creating addon: coredns
+2025-09-30 14:08:30 [ℹ]  successfully created addon: coredns
+2025-09-30 14:10:31 [ℹ]  addon "vpc-cni" active
+2025-09-30 14:10:32 [ℹ]  deploying stack "eksctl-cloud-intermediate-eks-addon-vpc-cni"
+2025-09-30 14:10:32 [ℹ]  waiting for CloudFormation stack "eksctl-cloud-intermediate-eks-addon-vpc-cni"
+2025-09-30 14:11:02 [ℹ]  waiting for CloudFormation stack "eksctl-cloud-intermediate-eks-addon-vpc-cni"
+2025-09-30 14:11:02 [ℹ]  updating addon
+2025-09-30 14:11:13 [ℹ]  addon "vpc-cni" active
+2025-09-30 14:11:13 [ℹ]  building managed nodegroup stack "eksctl-cloud-intermediate-eks-nodegroup-standard-workers"
+2025-09-30 14:11:13 [ℹ]  deploying stack "eksctl-cloud-intermediate-eks-nodegroup-standard-workers"
+2025-09-30 14:11:13 [ℹ]  waiting for CloudFormation stack "eksctl-cloud-intermediate-eks-nodegroup-standard-workers"
+2025-09-30 14:11:43 [ℹ]  waiting for CloudFormation stack "eksctl-cloud-intermediate-eks-nodegroup-standard-workers"
+2025-09-30 14:12:33 [ℹ]  waiting for CloudFormation stack "eksctl-cloud-intermediate-eks-nodegroup-standard-workers"
+2025-09-30 14:14:33 [ℹ]  waiting for CloudFormation stack "eksctl-cloud-intermediate-eks-nodegroup-standard-workers"
+2025-09-30 14:14:33 [ℹ]  waiting for the control plane to become ready
+2025-09-30 14:14:33 [✔]  saved kubeconfig as "/home/ec2-user/.kube/config"
+2025-09-30 14:14:33 [ℹ]  no tasks
+2025-09-30 14:14:33 [✔]  all EKS cluster resources for "cloud-intermediate-eks" have been created
+2025-09-30 14:14:33 [ℹ]  nodegroup "standard-workers" has 2 node(s)
+2025-09-30 14:14:33 [ℹ]  node "ip-192-168-51-80.ap-northeast-2.compute.internal" is ready
+2025-09-30 14:14:33 [ℹ]  node "ip-192-168-74-180.ap-northeast-2.compute.internal" is ready
+2025-09-30 14:14:33 [ℹ]  waiting for at least 1 node(s) to become ready in "standard-workers"
+2025-09-30 14:14:33 [ℹ]  nodegroup "standard-workers" has 2 node(s)
+2025-09-30 14:14:33 [ℹ]  node "ip-192-168-51-80.ap-northeast-2.compute.internal" is ready
+2025-09-30 14:14:33 [ℹ]  node "ip-192-168-74-180.ap-northeast-2.compute.internal" is ready
+2025-09-30 14:14:33 [✔]  created 1 managed nodegroup(s) in cluster "cloud-intermediate-eks"
+2025-09-30 14:14:34 [ℹ]  kubectl command should work with "/home/ec2-user/.kube/config", try 'kubectl get nodes'
+2025-09-30 14:14:34 [✔]  EKS cluster "cloud-intermediate-eks" in "ap-northeast-2" region is ready
+[SUCCESS] EKS 클러스터 생성 완료: cloud-intermediate-eks
+Updated context arn:aws:eks:ap-northeast-2:032068930526:cluster/cloud-intermediate-eks in /home/ec2-user/.kube/config
+[INFO] 클러스터 정보:
+Kubernetes control plane is running at https://DE7F2A78FDA3D1A8DC9CA80FD6D07B22.gr7.ap-northeast-2.eks.amazonaws.com
+CoreDNS is running at https://DE7F2A78FDA3D1A8DC9CA80FD6D07B22.gr7.ap-northeast-2.eks.amazonaws.com/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+NAME                                                STATUS   ROLES    AGE    VERSION
+ip-192-168-51-80.ap-northeast-2.compute.internal    Ready    <none>   115s   v1.28.15-eks-113cf36
+ip-192-168-74-180.ap-northeast-2.compute.internal   Ready    <none>   109s   v1.28.15-eks-113cf36
+[ec2-user@ip-10-1-1-198 kubernetes-basics]$ 

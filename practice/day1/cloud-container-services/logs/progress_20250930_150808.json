@@ -1,0 +1,19 @@
+{
+  "timestamp": "20250930_150808",
+  "status": "started",
+  "steps": [
+    {
+      "step": "cluster-create",
+      "status": "existing",
+      "message": "기존 클러스터 사용: eks-intermediate",
+      "timestamp": 1759212490.482125
+    }
+  ],
+  "resources": {
+    "created": [],
+    "existing": [],
+    "modified": [],
+    "deleted": []
+  },
+  "errors": []
+}

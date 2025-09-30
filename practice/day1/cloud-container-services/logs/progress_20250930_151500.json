@@ -1,0 +1,19 @@
+{
+  "timestamp": "20250930_151500",
+  "status": "started",
+  "steps": [
+    {
+      "step": "cluster-create",
+      "status": "existing",
+      "message": "기존 클러스터 사용: ecs-intermediate",
+      "timestamp": 1759212902.219106
+    }
+  ],
+  "resources": {
+    "created": [],
+    "existing": [],
+    "modified": [],
+    "deleted": []
+  },
+  "errors": []
+}

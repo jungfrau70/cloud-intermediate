@@ -1,0 +1,25 @@
+{
+  "timestamp": "20250930_150715",
+  "status": "started",
+  "steps": [
+    {
+      "step": "cluster-create",
+      "status": "started",
+      "message": "ECS 클러스터 생성 시작",
+      "timestamp": 1759212437.053368
+    },
+    {
+      "step": "cluster-create",
+      "status": "failed",
+      "message": "ECS 클러스터 생성 실패",
+      "timestamp": 1759212570.547263
+    }
+  ],
+  "resources": {
+    "created": [],
+    "existing": [],
+    "modified": [],
+    "deleted": []
+  },
+  "errors": []
+}

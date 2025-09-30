@@ -1,0 +1,19 @@
+{
+  "timestamp": "20250930_165345",
+  "status": "started",
+  "steps": [
+    {
+      "step": "create-hub",
+      "status": "started",
+      "message": "모니터링 허브 인프라 생성 시작",
+      "timestamp": 1759218874.010825
+    }
+  ],
+  "resources": {
+    "created": [],
+    "existing": [],
+    "modified": [],
+    "deleted": []
+  },
+  "errors": []
+}

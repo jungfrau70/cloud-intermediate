@@ -1,0 +1,23 @@
+[0;34m[INFO][0m 로그 파일: ./cleanup-logs/cleanup_20250930_145943.log
+[0;34m[INFO][0m 프로바이더: kubernetes
+[0;34m[INFO][0m 모드: dry-run
+[0;34m[INFO][0m 병렬 작업 수: 4
+[0;34m[INFO][0m 환경 변수 검증 중...
+[0;34m[INFO][0m 의존성 검증 중...
+[0;32m[SUCCESS][0m 의존성 검증 완료
+[0;32m[SUCCESS][0m 초기화 완료
+[0;36m[STEP][0m === Day1 통합강의안 자원 정리 시작 (배포 순서의 역순) ===
+[0;34m[INFO][0m 1단계: LoadBalancer Service 정리 시작
+[0;36m[STEP][0m Kubernetes 리소스 정리 중...
+[0;34m[INFO][0m [DRY-RUN] Kubernetes 리소스 삭제
+[0;34m[INFO][0m 2단계: Kubernetes 리소스 정리 시작
+[0;36m[STEP][0m kubectl Context 정리 중...
+[0;34m[INFO][0m [DRY-RUN] kubectl Context 삭제
+[0;36m[STEP][0m 정리 결과 검증 중...
+[1;33m[WARNING][0m 아직 존재하는 Pod들: 5개
+[1;33m[WARNING][0m 아직 존재하는 Service들: 3개
+[1;33m[WARNING][0m LoadBalancer Service가 아직 존재합니다
+[0;31m[ERROR][0m 다음 리소스들이 정리되지 않았습니다:
+[0;31m[ERROR][0m   - Kubernetes Pod
+[0;31m[ERROR][0m   - Kubernetes Service
+[0;31m[ERROR][0m   - LoadBalancer Service

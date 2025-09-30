@@ -1,0 +1,19 @@
+{
+  "timestamp": "20250930_151757",
+  "status": "started",
+  "steps": [
+    {
+      "step": "status",
+      "status": "completed",
+      "message": "ECS 상태 확인 완료",
+      "timestamp": 1759213080.076187
+    }
+  ],
+  "resources": {
+    "created": [],
+    "existing": [],
+    "modified": [],
+    "deleted": []
+  },
+  "errors": []
+}

@@ -1,0 +1,25 @@
+{
+  "timestamp": "20250930_151527",
+  "status": "started",
+  "steps": [
+    {
+      "step": "service-create",
+      "status": "started",
+      "message": "ECS 서비스 생성 시작",
+      "timestamp": 1759212931.039427
+    },
+    {
+      "step": "service-create",
+      "status": "failed",
+      "message": "ECS 서비스 생성 실패",
+      "timestamp": 1759212931.889979
+    }
+  ],
+  "resources": {
+    "created": [],
+    "existing": [],
+    "modified": [],
+    "deleted": []
+  },
+  "errors": []
+}

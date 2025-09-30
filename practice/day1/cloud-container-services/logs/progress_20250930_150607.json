@@ -1,0 +1,25 @@
+{
+  "timestamp": "20250930_150607",
+  "status": "started",
+  "steps": [
+    {
+      "step": "deploy-service",
+      "status": "started",
+      "message": "Cloud Run 서비스 배포 시작",
+      "timestamp": 1759212371.576549
+    },
+    {
+      "step": "deploy-service",
+      "status": "completed",
+      "message": "Cloud Run 서비스 배포 완료",
+      "timestamp": 1759212447.830431
+    }
+  ],
+  "resources": {
+    "created": [],
+    "existing": [],
+    "modified": [],
+    "deleted": []
+  },
+  "errors": []
+}
